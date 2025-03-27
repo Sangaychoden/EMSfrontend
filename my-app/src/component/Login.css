@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.login-container {
+    width: 100vw;
+    height: 100vh;
+    background: url('../../public/assets//login.png') no-repeat center;
+    background-size: 100% auto;  /* Zooms out the image without changing position */
+    background-color: #f8f8f8; /* Adds a fallback background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  
+
+
+  .logo {
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    width: 300px; /* Set the desired width */
+    height: auto; /* Adjust height automatically to maintain aspect ratio */
+  }
+  
+  .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the image maintains its aspect ratio */
+  }
+  
+
+.login-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px;  /* Increased padding for more space inside */
+    border-radius: 15px;
+    width: 2300px; /* Increased width */
+    height: 1500px; /* Increased height */
+    text-align: center;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);  /* Slightly stronger shadow */
+  }
+  
+
+  .login-box h2 {
+    font-size: 70px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-top: 120px;
+    text-shadow: 6px 10px 10px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
+  }
+  
+  .sub-text {
+    font-size: 50px;
+    color: #555;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  }
+  
+
+.input-group1 {
+    display: flex;
+    align-items: center;
+    background: #f3f3f3;
+    padding: 18px 40px;
+    border-radius: 20px;
+    margin-bottom: -100px;
+    border: 1px solid #ccc;
+    position: relative;
+    gap: 15px;
+    margin-top: 200px;
+    width: 80%; /* Reduced from 80% */
+    max-width: 2000px; /* Reduced from 2000px */
+    margin-left: auto;
+    height: 6.5vh;
+    margin-right: auto;
+}
+
+.input-group1 input {
+  width: 100%;
+  height: 3vh;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size:40px;
+  border-radius: 10%;
+  padding-right: 40px
+ 
+}
+
+.input-group1 .icon {
+  color: #555;
+  font-size: 40px;
+  position: right;
+  right: 15px;
+}
+.options {
+    text-align: right;
+    margin-bottom: 20px;
+    margin-top: 120px;
+    position: relative;
+    left: -260px; /* Moves the element 20px to the left */
+  }
+
+.options a {
+  text-decoration: none;
+  font-size: 30px;
+  color: #555555;
+  font-style: italic;
+ 
+}
+
+.login-btn {
+    width: 80%;
+    max-width: 2000;
+    height: 6.5vh;
+    padding: 14px;
+    background: #4A6D7C;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Added shadow effect */
+    margin-top: 100px; /* Add this to push the button down */
+  }
