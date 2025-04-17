@@ -1,0 +1,66 @@
+/* General Layout */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+
+  
+
+  
+  /* Content */
+  .content {
+    /* padding: 20px; */
+    /* margin-top: -600px; */
+    /* margin: auto auto; */
+    margin-right: 100px;
+    width: 100%;
+    
+  }
+  
+  h4 {
+    font-size: 20px;
+    font-weight:bold;
+    color: #4A4A4A;
+  }
+  
+/* Add Employee Button */
+.add-employee-btn {
+  background-color: #C9DEDD;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 900px;
+}
+
+.add-employee-btn:hover {
+  background-color: rgb(120, 171, 186);
+}
+
+
+/* Action Buttons */
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.edit-btn {
+  color: #274552;
+}
+
+.delete-btn {
+  color: #921B29;
+}
+
