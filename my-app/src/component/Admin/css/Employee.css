@@ -52,15 +52,18 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 15px;
   margin-right: 8px;
 }
 
 .edit-btn {
   color: #274552;
+  height: 10px;
+
 }
 
 .delete-btn {
   color: #921B29;
+
 }
 

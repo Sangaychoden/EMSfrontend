@@ -60,9 +60,14 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
       return;
     }
 
-    console.log("Task Assigned:", taskDetails);
+    const newTask = {
+      ...taskDetails,
+      id: Date.now(), // unique ID for each task
+      attachment: []  // default empty attachments
+    };
+    
+    setTasks((prevTasks) => [...prevTasks, newTask]);
     setShowSuccessMessage(true);
-    setErrors({});
 
     // Reset form
     setTaskDetails({
@@ -101,25 +106,53 @@ const handleEditInputChange = (e) => {
 };
 
 
+// const handleEditSubmit = () => {
+//   const formErrors = validateEditForm(); // Use edit form validation here
+//   if (Object.keys(formErrors).length > 0) {
+//     setErrors(formErrors);
+//     return;
+//   }
+
+//   console.log("Edited Task:", editTaskDetails);
+//   setErrors({}); // clear errors after success
+//   setIsEditModalOpen(false);
+// };
 const handleEditSubmit = () => {
-  const formErrors = validateEditForm(); // Use edit form validation here
+  const formErrors = validateEditForm();
   if (Object.keys(formErrors).length > 0) {
     setErrors(formErrors);
     return;
   }
 
-  console.log("Edited Task:", editTaskDetails);
-  setErrors({}); // clear errors after success
+  setTasks((prevTasks) =>
+    prevTasks.map((task) =>
+      task.id === editTaskDetails.id ? editTaskDetails : task
+    )
+  );
+
   setIsEditModalOpen(false);
+  setErrors({});
+};
+
+const handleEditClick = (task) => {
+  setEditTaskDetails(task);
+  setIsEditModalOpen(true);
 };
 
 
 const [showDeleteModal, setShowDeleteModal] = useState(false);
 const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 const [taskToDelete, setTaskToDelete] = useState(null);
+// const [tasks, setTasks] = useState([]);
+const [selectedTask, setSelectedTask] = useState(null);
+const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+const handleDetailClick = (tasks) => {
+  setSelectedTask(tasks);
+  setIsDetailModalOpen(true);
+};
 
 
-const [tasks, setTasks] = useState([]);
 
 const handleDeleteClick = (taskId) => {
   setTaskToDelete(taskId);
@@ -136,6 +169,23 @@ const confirmDelete = () => {
     setTaskToDelete(null);
   }, 1500);
 };
+
+const [tasks, setTasks] = useState([
+  {
+    id: 1,
+    task: "Add Dark Mode Feature in the company’s website",
+    assignedTo: "Karma Dorji",
+    assignDate: "2025-04-19",
+    dueDate: "2025-04-23",
+    status: "In Progress",
+    description: `1. Overview
+The Dark Mode feature allows users to switch the website's theme to a darker color scheme...`,
+    attachment: ["Assignment.pdf", "Task1.png"],
+  },
+  // Add more tasks here
+]);
+
+
 
   return (
     <div className="dashboard-container">
@@ -285,63 +335,37 @@ const confirmDelete = () => {
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Add Dark Mode Feature in the company’s website</td>
-        <td>Karma Dorji</td>
-        <td>March 12</td>
-        <td>March 13</td>
-        <td className="in-progress">In Progress</td>
-        <td>...</td>
-        <td>
-          <FaEdit className="edit-icon" onClick={() => {
-    setEditTaskDetails(editTaskDetails); 
-    setIsEditModalOpen(true);
-  }} /> <FaTrash className="delete-icon"  onClick={() => handleDeleteClick(tasks.id)} />
-        </td>
-      </tr>
-      <tr>
-        <td>Add Dark Mode Feature in the company’s website</td>
-        <td>Karma Dorji</td>
-        <td>March 12</td>
-        <td>March 13</td>
-        <td className="in-progress">In Progress</td>
-        <td>...</td>
+     {tasks.map((task) => (
+    <tr key={task.id}>
+      <td>{task.task}</td>
+      <td>{task.assignedTo}</td>
+      <td>{task.assignDate}</td>
+      <td>{task.dueDate}</td>
+      <td className={
+        task.status === "Completed" ? "completed" :
+        task.status === "In Progress" ? "in-progress" :
+        task.status === "Over" ? "over" : ""
+      }>
+        {task.status}
+      </td>
+      <td
+        style={{ cursor: 'pointer', color:
+          task.status === "Completed" ? "#008000" :
+          task.status === "Over" ? "#883C45" :
+          "#246392"
+        }}
+        onClick={() => handleDetailClick(task)}
+      >
+        ...
+      </td>
+      <td>
+        <FaEdit className="edit-icon" onClick={() => handleEditClick(task)} />
+        <FaTrash className="delete-icon" onClick={() => handleDeleteClick(task.id)} />
+      </td>
+    </tr>
+  ))}
 
-        <td>
-          <FaEdit className="edit-icon" onClick={() => {
-    setEditTaskDetails(editTaskDetails); 
-    setIsEditModalOpen(true);
-  }} /> <FaTrash className="delete-icon"  onClick={() => handleDeleteClick(tasks.id)} />
-        </td>
-      </tr>
-      <tr>
-        <td>Add Dark Mode Feature in the company’s website</td>
-        <td>Karma Dorji</td>
-        <td>March 12</td>
-        <td>March 13</td>
-        <td className="in-progress">In Progress</td>
-        <td>...</td>
-        <td>
-          <FaEdit className="edit-icon" onClick={() => {
-    setEditTaskDetails(editTaskDetails); 
-    setIsEditModalOpen(true);
-  }} /> <FaTrash className="delete-icon"  onClick={() => handleDeleteClick(tasks.id)} />
-        </td>
-      </tr>
-      <tr>
-        <td>Add Dark Mode Feature in the company’s website</td>
-        <td>Karma Dorji</td>
-        <td>March 12</td>
-        <td>March 13</td>
-        <td className="in-progress">In Progress</td>
-        <td>...</td>
-        <td>
-          <FaEdit className="edit-icon" onClick={() => {
-    setEditTaskDetails(editTaskDetails); 
-    setIsEditModalOpen(true);
-  }} /> <FaTrash className="delete-icon"  onClick={() => handleDeleteClick(tasks.id)} />
-        </td>
-      </tr>
+
     </tbody>
   </table>
 </div>
@@ -582,6 +606,172 @@ const confirmDelete = () => {
     <CheckCircleIcon style={{ width: '60px', height: '60px', color: 'green' }} />
     <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Deleted Successfully</p>
   </div>
+  </div>
+)}
+
+{isDetailModalOpen && selectedTask && (
+  <div style={{
+    position: 'fixed',
+    top: 0, left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999
+  }}>
+    <div style={{
+      width: '90%',
+      maxWidth: '800px',
+      backgroundColor: '#fff',
+      borderRadius: '5px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      maxHeight: '150vh',
+      overflowY: 'auto',
+      padding: '20px',
+      position: 'relative'
+    }}>
+      {/* Modal Header */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '20px'
+      }}>
+        <h2 style={{ fontSize: '17px', fontWeight: 'bold' }}>Task Details</h2>
+        <button
+          onClick={() => setIsDetailModalOpen(false)}
+          style={{
+            fontSize: '24px',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer'
+          }}
+        >
+          ×
+        </button>
+      </div>
+
+      {/* Task Info */}
+      <div style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold' }}>Task</label>
+        <input
+          type="text"
+          value={selectedTask.task}
+          readOnly
+          style={{
+            width: '100%',
+            padding: '8px',
+            border: '1px solid #ccc',
+            borderRadius: '6px',
+            marginTop: '5px',
+            fontSize:"12px"
+          }}
+        />
+      </div>
+
+      <div style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold',fontSize:"12px" }}>Assign to</label>
+        <input
+          type="text"
+          value={selectedTask.assignedTo}
+          readOnly
+          style={{
+            width: '100%',
+            padding: '8px',
+            border: '1px solid #ccc',
+            borderRadius: '6px',
+            marginTop: '5px',
+            fontSize:"12px"
+          }}
+        />
+      </div>
+
+      {/* Dates */}
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '15px' }}>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontWeight: 'bold',fontSize:"12px" }}>Assign Date</label>
+          <input
+            type="text"
+            value={selectedTask.assignDate}
+            readOnly
+            style={{
+              width: '100%',
+              padding: '8px',
+              border: '1px solid #ccc',
+              borderRadius: '6px',
+              marginTop: '5px',
+              fontSize:"12px"
+            }}
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontWeight: 'bold',fontSize:"12px" }}>Due Date</label>
+          <input
+            type="text"
+            value={selectedTask.dueDate}
+            readOnly
+            style={{
+              width: '100%',
+              padding: '8px',
+              border: '1px solid #ccc',
+              borderRadius: '6px',
+              marginTop: '5px',
+              fontSize:"12px"
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Description */}
+      <div style={{ marginBottom: '15px' }}>
+        <label style={{ fontWeight: 'bold',fontSize:"12px" }}>Description</label>
+        <div style={{
+          border: '1px solid #ccc',
+          borderRadius: '8px',
+          padding: '10px',
+          backgroundColor: '#f9f9f9',
+          marginTop: '5px',
+          whiteSpace: 'pre-wrap',
+          fontSize:"12px"
+        }}>
+          {selectedTask.description}
+        </div>
+      </div>
+
+      {/* Status */}
+      {selectedTask.status && (
+        <div style={{ marginBottom: '15px' }}>
+          <label style={{ fontWeight: 'bold',fontSize:"12px" }}>Status</label>
+          <input
+            type="text"
+            value={selectedTask.status}
+            readOnly
+            style={{
+              width: '100%',
+              padding: '8px',
+              border: '1px solid #ccc',
+              borderRadius: '6px',
+              marginTop: '5px',
+              fontSize:"12px"
+            }}
+          />
+        </div>
+      )}
+
+      {/* Attachment */}
+      {selectedTask.attachment && (
+        <div style={{ marginBottom: '10px' }}>
+          <label style={{ fontWeight: 'bold', fontSize:"12px" }}>Attachment</label>
+          <ul style={{ marginTop: '5px', fontSize:"12px", marginLeft: '20px' }}>
+            {selectedTask.attachment.map((file, i) => (
+              <li key={i}>{file}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   </div>
 )}
 

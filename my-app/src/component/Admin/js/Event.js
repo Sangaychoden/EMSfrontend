@@ -78,69 +78,73 @@ const handleImageUpload = (e) => {
 
 
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState(null);
+  // const [showDeleteModal, setShowDeleteModal] = useState(false);
+  // const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  // const [taskToDelete, setTaskToDelete] = useState(null);
   
   const [tasks, setTasks] = useState([]);
   
-  const handleDeleteClick = (taskId) => {
-    setTaskToDelete(taskId);
-    setShowDeleteModal(true);
+  const handleDeleteClick = (eventId) => {
+    setTaskToDelete(eventId); // store the event ID to delete
+    setShowDeleteModal(true); // show modal
   };
   
+  // const confirmDelete = () => {
+  //   setShowDeleteModal(false);
+  //   setShowSuccessPopup(true);
+  
+  //   setTimeout(() => {
+  //     setTasks(tasks.filter(task => task.id !== taskToDelete));
+  //     setShowSuccessPopup(false);
+  //     setTaskToDelete(null);
+  //   }, 1500);
+  // };
   const confirmDelete = () => {
     setShowDeleteModal(false);
     setShowSuccessPopup(true);
   
     setTimeout(() => {
-      setTasks(tasks.filter(task => task.id !== taskToDelete));
+      setEvents((prevEvents) => prevEvents.filter(event => event.id !== taskToDelete));
       setShowSuccessPopup(false);
       setTaskToDelete(null);
     }, 1500);
   };
   
+
+
+
 const [selectedEvent, setSelectedEvent] = useState(null); // For holding the selected event
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [editedEvent, setEditedEvent] = useState(null); // For holding the selected event
-// Add these for editing
-const [editId, setEditId] = useState(null);
-const [editTitle, setEditTitle] = useState('');
-const [editDescription, setEditDescription] = useState('');
-const [editSchedule, setEditSchedule] = useState('');
-const [editVenue, setEditVenue] = useState('');
+
+// State declarations
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+const [taskToDelete, setTaskToDelete] = useState(null); // now used for event ID
+const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
 
-  const handleEdit = (id) => {
-    const toEdit = events.find((item) => item.id === id);
-    if (toEdit) {
-      setEditId(toEdit.id);
-      setEditTitle(toEdit.title);
-      setEditDescription(toEdit.description);
-      setEditSchedule(toEdit.schedule);
-      setEditVenue(toEdit.venue);
 
-       setSelectedEvent(event);
-      setShowEditModal(true);
-    }
-  };
+const handleEdit = (id) => {
+  const toEdit = events.find((item) => item.id === id);
+  if (toEdit) {
+    setEditedEvent({ ...toEdit });
+    setSelectedEvent(toEdit);
+    setShowEditModal(true);
+  }
+};
+
   
+const handleUpdateEvent = () => {
+  const updatedEvents = events.map((item) =>
+    item.id === editedEvent.id ? editedEvent : item
+  );
+  setEvents(updatedEvents);
+  setShowEditModal(false);
+  setSelectedEvent(null);
+  setEditedEvent(null);
+};
 
-  const handleUpdateEvent = () => {
-    const updatedEvents = events.map((item) =>
-      item.id === editId
-        ? { ...item, title: editTitle, description: editDescription, schedule: editSchedule, venue: editVenue }
-        : item
-    );
-    setEvents(updatedEvents);
-    setShowEditModal(false);
-    setEditId(null);
-    setEditTitle('');
-    setEditDescription('');
-    setEditSchedule('');
-    setEditVenue('');
-  };
 
   const handleDelete = (id) => {
     const updatedEvents = events.filter((event) => event.id !== id);
@@ -178,7 +182,7 @@ const [editVenue, setEditVenue] = useState('');
       {/* Main Content */}
       <div className="maincontent" >
         {/* Navbar */}
-        <div style={{marginRight:'1093px', marginTop:'-20px', zIndex:'10000'}}> 
+        <div style={{marginRight:'1093px', marginTop:'-20px', zIndex:'10000]'}}> 
  <Navbar />
  </div> 
 
@@ -220,7 +224,7 @@ const [editVenue, setEditVenue] = useState('');
               backgroundColor: "#fff",
               position: "relative",
               overflow: "hidden",
-              zIndex: -1,
+              zIndex: 10,
             }}>
               {/* Event Image */}
               <img
@@ -231,9 +235,9 @@ const [editVenue, setEditVenue] = useState('');
 
               {/* Edit and Delete Icons */}
               <div style={{ position: "absolute", top: "10px", right: "10px", display: "flex", gap: "10px" }}>
-                <FaEdit style={{ color: "#274552", cursor: "pointer" }}   onClick={() => handleEdit(event)}
+                <FaEdit style={{ color: "#274552", cursor: "pointer" }}  onClick={() => handleEdit(event.id)}
                   />
-                <FaTrash style={{ color: "#921B29", cursor: "pointer" }} onClick={() => handleDelete(event.id)} />
+                <FaTrash style={{ color: "#921B29", cursor: "pointer" }} onClick={() => handleDeleteClick(event.id)} />
               </div>
 
               {/* Event Details */}
@@ -444,7 +448,7 @@ const [editVenue, setEditVenue] = useState('');
 
 
 {/* Edit Event */}
-{showEditModal && editedEvent && (
+{showEditModal && selectedEvent && (
   <div style={{
     position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
     backgroundColor: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -599,7 +603,7 @@ const [editVenue, setEditVenue] = useState('');
           }}>
           ×
         </button>
-            <p style={{ marginTop: '50px', fontWeight: 'bold' }}>Are you sure you want to delete this task?</p>
+            <p style={{ marginTop: '50px', fontWeight: 'bold' }}>Are you sure you want to delete this Event?</p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '140px' }}>
               <button
                 onClick={confirmDelete}

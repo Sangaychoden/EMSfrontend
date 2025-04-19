@@ -336,7 +336,7 @@ const Announcement = () => {
           }}>
           ×
         </button>
-            <p style={{ marginTop: '50px', fontWeight: 'bold' }}>Are you sure you want to delete this task?</p>
+            <p style={{ marginTop: '50px', fontWeight: 'bold' }}>Are you sure you want to delete this Announcement?</p>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '140px' }}>
               <button
                 onClick={confirmDelete}

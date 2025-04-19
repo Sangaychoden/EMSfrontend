@@ -319,7 +319,7 @@ const handleEditClick = () => {
                   <th>Phone Number</th>
                   <th>Employee Title</th>
                   <th>Employee Type</th>
-                  <th>Details</th>
+                  {/* <th>Details</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -332,7 +332,7 @@ const handleEditClick = () => {
                     <td>{employee.phone}</td>
                     <td>{employee.title}</td>
                     <td>{employee.type}</td>
-                    <td>...</td>
+                    {/* <td>...</td> */}
                     <td>
                       <button className="edit-btn"><FaUserEdit  onClick={handleEditClick}/></button>
                       <button className="delete-btn"><FaTrash onClick={() => handleDeleteClick(tasks.id)} /></button>

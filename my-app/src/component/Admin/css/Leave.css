@@ -42,7 +42,7 @@ h4 {
 
 /* Properly hide date input but keep it accessible */
 .hidden-date-picker {
-  position: absolute;
+  /* position: absolute; */
   width: 0;
   height: 0;
   opacity: 0;
