@@ -19,12 +19,13 @@
     flex-direction: column;
 }
 
-.logo {
+.logo1 {
     position: absolute;
     top: 50px;
     left: 100px;
-    width: 300px;
-    height: auto;
+    width: 3px; /* Set the desired width */
+    height: auto; /* Adjust height automatically to maintain aspect ratio */
+  
 }
 
 .logo img {
@@ -35,21 +36,21 @@
 
 .forgot-password-box {
     background: rgba(255, 255, 255, 0.95);
-    padding: 60px;
-    border-radius: 15px;
-    width: 2300px;
-    height: 1500px;
+    padding: 60px;  /* Increased padding for more space inside */
+    border-radius: 10px;
+    width: 700px; /* Increased width */
+    height: 450px; /* Increased height */
     text-align: center;
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);  /* Slightly stronger shadow */
 }
 
 .forgot-password-box h3 {
-    font-size: 40px;
-    margin-bottom: 100px;
-    margin-top: 200px;
-    text-shadow: 6px 10px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-left: -1160px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    margin-left: -90px;
+    text-shadow: 6px 10px 10px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
 }
 
 /* Add to your forgotpassword.css */
@@ -57,15 +58,15 @@
 .otp-container {
     display: flex;
     justify-content: center;
-    gap: 100px; /* Adds space between the OTP boxes */
+    gap: 40px; /* Adds space between the OTP boxes */
     margin: 15px 0;
-    margin-top: 150px;
+    margin-top: 40px;
 }
 
 .otp-input {
-    width: 300px;
-    height: 250px;
-    font-size: 48px;
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
     text-align: center;
     border: 2px solid #140e0e;
     border-radius: 12px;
@@ -82,29 +83,29 @@
 
 /* Keep all your existing styles */
 
-.submit-btnn {
-    width: 80%;
-    max-width: 2000px;
+.submit-btnn1 {
+    width: 90%;
+    /* max-width: 2000; */
     height: 6.5vh;
-    padding: 14px;
+    padding: -10px;
     background: #4A6D7C;
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 60px;
+    border-radius: 10px;
+    font-size: 25px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    margin-top: 260px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Added shadow effect */
+    margin-top: 70px; /* Add this to push the button down */
 }
 
-.resend-otp {
-    font-size: 35px;
+.resend-otpp {
+    font-size: 18px;
     color: #555;
-    margin-top: -380px;
+    margin-top: -115px;
     cursor: pointer;
-    margin-left: -1550px;
+    margin-left: -400px;
 }
 
 .resend-otp span {
@@ -121,18 +122,18 @@
     background: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
     text-align: center;
-    width: 80%;
-    height: 18vh;
+    width: 30%;
+    height: 20vh;
     max-width: 900px;
 }
 
 .error-box p {
-    font-size: 40px;
+    font-size: 15px;
     color: #333;
     margin-bottom: -20px;
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 .error-ok-btn {
@@ -141,8 +142,8 @@
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
-    font-size: 30px;
+    font-size: 15px;
     cursor: pointer;
     width: 8vh;
-    margin-top: 100px;
+    margin-top: 40px;
 }

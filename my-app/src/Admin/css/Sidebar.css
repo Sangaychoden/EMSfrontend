@@ -7,7 +7,7 @@
   
 /* Sidebar */
 .sidebar {
-    width: 250px;
+    width: 260px;
     background-color: #476775; /* Match sidebar color */
     color: white;
     display: flex;
@@ -31,7 +31,7 @@
     list-style: none;
     padding: 0;
     width: 80%;
-    margin-top: 150px;
+    margin-top: 40px;
     align-items: center;
 }
   

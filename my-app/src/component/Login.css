@@ -22,11 +22,11 @@
   
 
 
-  .logo {
+  .logo1 {
     position: absolute;
     top: 50px;
     left: 100px;
-    width: 300px; /* Set the desired width */
+    width: 3px; /* Set the desired width */
     height: auto; /* Adjust height automatically to maintain aspect ratio */
   }
   
@@ -40,24 +40,24 @@
 .login-box {
     background: rgba(255, 255, 255, 0.95);
     padding: 60px;  /* Increased padding for more space inside */
-    border-radius: 15px;
-    width: 2300px; /* Increased width */
-    height: 1500px; /* Increased height */
+    border-radius: 10px;
+    width: 700px; /* Increased width */
+    height: 450px; /* Increased height */
     text-align: center;
     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);  /* Slightly stronger shadow */
   }
   
 
   .login-box h2 {
-    font-size: 70px;
+    font-size: 25px;
     font-weight: bold;
     margin-bottom: 15px;
-    margin-top: 120px;
+    margin-top: -30px;
     text-shadow: 6px 10px 10px rgba(0, 0, 0, 0.1); /* Adds a soft shadow */
   }
   
-  .sub-text {
-    font-size: 50px;
+  .sub-text1 {
+    font-size: 15px;
     color: #555;
     margin-bottom: 25px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
@@ -69,12 +69,12 @@
     align-items: center;
     background: #f3f3f3;
     padding: 18px 40px;
-    border-radius: 20px;
-    margin-bottom: -100px;
+    border-radius: 10px;
+    /* margin-bottom: -100px; */
     border: 1px solid #ccc;
     position: relative;
     gap: 15px;
-    margin-top: 200px;
+    margin-top: 40px;
     width: 80%; /* Reduced from 80% */
     max-width: 2000px; /* Reduced from 2000px */
     margin-left: auto;
@@ -88,7 +88,7 @@
   border: none;
   background: transparent;
   outline: none;
-  font-size:40px;
+  font-size:15px;
   border-radius: 10%;
   padding-right: 40px
  
@@ -96,39 +96,63 @@
 
 .input-group1 .icon {
   color: #555;
-  font-size: 40px;
+  font-size: 15px;
   position: right;
   right: 15px;
 }
 .options {
     text-align: right;
-    margin-bottom: 20px;
-    margin-top: 120px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     position: relative;
-    left: -260px; /* Moves the element 20px to the left */
+    left: -80px; /* Moves the element 20px to the left */
   }
 
 .options a {
   text-decoration: none;
-  font-size: 30px;
+  font-size: 15px;
   color: #555555;
   font-style: italic;
  
 }
 
-.login-btn {
+.login-btn1 {
     width: 80%;
-    max-width: 2000;
+    /* max-width: 2000; */
     height: 6.5vh;
-    padding: 14px;
+    padding: -10px;
     background: #4A6D7C;
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 60px;
+    border-radius: 10px;
+    font-size: 25px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Added shadow effect */
-    margin-top: 100px; /* Add this to push the button down */
+    margin-top: 30px; /* Add this to push the button down */
   }
+  /* Login.css */
+.error-message {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffebee;
+  color: #d32f2f;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 1px solid #ef9a9a;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 100;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; top: 10px; }
+  to { opacity: 1; top: 20px; }
+}
+
+.login-box {
+  position: relative; /* Needed for absolute positioning of error */
+}

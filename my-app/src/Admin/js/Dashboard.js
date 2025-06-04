@@ -1,21 +1,21 @@
 import React from "react";
-import "../css/Dashboard.css"; // Import the CSS file
+import "../../Admin/css/Dashboard.css"; // Import the CSS file
 import { FaTasks, FaUserFriends, FaUsers, FaBullhorn, FaSignOutAlt, FaUserPlus } from "react-icons/fa";
 import { MdDashboard, MdDateRange } from "react-icons/md";
 import { IoMdPerson } from "react-icons/io";
 // import logo from "../Admin/logo.png"; // Adjust the path as necessary
-import Sidebar from "./Sidebar"; // Import the Sidebar component
-import Navbar from "./Navbar"; // Import the Navbar component
+import Sidebar from "../js/Navbar"; // Import the Sidebar component
+import Navbar from "../js/Sidebar"; // Import the Navbar component
 
 const Dashboard = () => {
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container5">
       {/* Sidebar */}
       <Sidebar />
       
 
       {/* Main Content */}
-      <div className="main-content">
+      <div className="main-content5">
         {/* Navbar */}
 
         <Navbar />

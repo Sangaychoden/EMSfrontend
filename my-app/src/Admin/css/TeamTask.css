@@ -1,0 +1,496 @@
+
+ .dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.sidebar-with-welcome {
+  width: 250px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.content1 {
+margin-right: -150px;
+width: 100%;
+}
+h2 {
+    font-size: 24px;
+    font-weight:bold;
+    color: #4A4A4A;
+  }
+  h6{
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .cards {
+    display: flex;
+    gap: 80px;
+    margin-top: 20px;
+    width: 1400px;
+    margin-left: 20px;
+    height: 120px;
+  }
+  
+  .card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  .card p {
+    font-size: 18px;
+    margin-top: -50px;
+    margin-left:-100px;
+
+  }
+  .card h3 {
+    font-size: 24px;
+    margin-top: -10px;
+    margin-left: -230px;
+  }
+  
+  .card-icon {
+    font-size: 45px;
+    margin-bottom: 10px;
+    width: 30px;
+    height: 30px;
+    margin-left: 200px;
+  }
+  
+  .active {
+    color: #883C45;
+    background-color: #F1EADE;
+    border: #ddd 1px solid;
+    border-radius: 50%;
+    padding: 3px;
+  }
+  
+  .leave {
+    color: #274552;
+    background-color: #C9DEDD;
+    border: #ddd 1px solid;
+    border-radius: 50%;
+    padding: 4px;
+  }
+  
+  .joined {
+    color: #C9DEDD;
+    background-color: #883C45;
+    border: #ddd 1px solid;
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  .taskbutton{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .OCbutton{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .task-btn {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .overdue-btn{
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background: #883C45;
+    cursor: pointer;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    gap: 5px;
+    color: #ffffff;
+  }
+
+  .task-btn:hover {
+    background: #f0f0f0;
+  }
+  
+  /* Assign Task Button */
+  .assign-task-btn {
+    margin-top: -10px;
+    padding: 10px 20px;
+    background: #476775;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 1100px;
+    transition: background 0.3s;
+  }
+  
+  .assign-task-btn:hover {
+    background: #36525e;
+  }
+  
+  /* Task Table */
+  .task-table {
+    margin-top: 10px;
+  }
+  
+  table {
+    width: 98%;
+    /* border-collapse: collapse; */
+    background: white;
+    /* box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); */
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #8c8c8c;
+  }
+  
+  thead {
+    background: #fafdfe;
+    color: rgb(53, 53, 53);
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #8c8c8c;
+  }
+  
+  th {
+    font-size: 14px;
+    /* text-transform: uppercase; */
+  }
+
+  td {
+    font-size: 12px;
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .in-progress {
+    color: #68a8c4;
+  }
+  
+  .completed {
+    color: green;
+  }
+  
+  .overdue {
+    color: #883C45;
+  }
+  
+  /* Icons */
+  .edit-icon {
+    color: #476775;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  
+  .delete-icon {
+    color: #921B29;
+    cursor: pointer;
+  }
+
+  .assign-icon {
+    color: #ffffff;
+    /* margin-top: 4px; */
+    cursor: pointer;
+  }
+
+
+  /* Modal Styles */
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  padding: 40px;
+  width: 800px;
+  height: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Close Button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Input Fields */
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+  width: 100%;
+  padding: 8px;
+  height:40px ;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+label{
+  font-size: 14px;
+
+}
+
+.date-container {
+  display: flex;
+  gap: 20px;
+}
+
+.done-btn {
+  background: #d1e7e0;
+  margin-top: 25px;
+  border: none;
+  margin-left: 300px;
+  width: 100px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+/* Employee Selector Styles */
+.employee-selector {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.employee-dropdown-toggle {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-arrow {
+  margin-left: 8px;
+}
+
+.employee-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 8px;
+  position: relative;
+}
+
+.check-icon {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  color: #246392;
+  font-size: 12px;
+}
+
+.selected-employees {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.selected-employee {
+  background-color: #e9f5ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.remove-employee-btn {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 12px;
+  padding: 0;
+}
+
+.remove-employee-btn:hover {
+  color: #333;
+}
+/* Modal Styles */
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   overflow-y: auto;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  padding: 40px;
+  width: 800px;
+ max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow-y: auto;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Close Button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Input Fields */
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+  width: 100%;
+  padding: 8px;
+  height:40px ;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+label{
+  font-size: 14px;
+
+}
+
+.date-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Input Fields */
+.task-body input,
+.task-body select,
+.task-body textarea {
+  width: 100%;
+  padding: 8px;
+  height:40px ;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+label{
+  font-size: 14px;
+
+}
+
+.date-container {
+  display: flex;
+  gap: 20px;
+}
+
+.done-btn {
+  background: #d1e7e0;
+  margin-top: 25px;
+  border: none;
+  margin-left: 300px;
+  width: 100px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+
+}

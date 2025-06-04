@@ -1,0 +1,202 @@
+
+ .dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.sidebar-with-welcome {
+  width: 250px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.split-layout {
+  display: flex;
+  padding: 20px;
+ margin-top: 40px;
+  gap: 20px;
+  height: calc(100vh - 80px); /* Adjust based on navbar height */
+}
+
+.tasks-side {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 30px;
+  height: 1000px; /* Increased height */
+  overflow: hidden;
+}
+
+.reminder-side {
+  flex: 1; /* 25% of the space */
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 80px; */
+  
+}
+
+.task-section {
+  margin-bottom: 30px;
+  /* margin-left:-40px, */
+}
+
+.task-section h2 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+   margin-left: 20px;
+}
+
+
+ /* Table styling */
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.task-table th {
+   background-color: #476775;
+  padding: 12x;
+  text-align: left;
+  border-bottom: 2px solid #dcdde1;
+  color: white;
+}
+
+.task-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f5f6fa;
+}
+
+/* .serial-number {
+  width: 50px;
+  text-align: center;
+  color: #718093;
+}
+
+.task-description {
+  width: calc(100% - 150px);
+  color: #2f3640;
+}
+
+.task-action {
+  width: 100px;
+  text-align: center;
+} */
+
+.serial-number {
+  width: 80px;  /* Increased width */
+  min-width: 100px;
+  text-align: center;
+  padding: 15px 25px;
+  font-size: 1em;
+  /* font-weight: 600; */
+  /* color: #2d3436; */
+  /* background-color: #f8f9fa; */
+  /* border-right: 2px solid #e9ecef; */
+}
+
+/* Task description column */
+.task-description {
+  width: calc(100% - 140px); /* Adjusted width */
+  padding: 15px 30px;
+  font-size: 1em;
+  /* line-height: 1.6; */
+}
+
+/* Action column */
+.task-action {
+  width: 140px;
+  padding: 15px 30px;
+  /* font:1.5em ; */
+}
+
+/* View button styling */
+.view-button {
+  padding: 8px 25px;
+  font-size: 1em;
+}
+.view-button {
+  background-color: #476775;
+  color: white;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.view-button:hover {
+  background-color: #487eb0;
+}
+
+/* .view-button {
+  background-color: #476775;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.view-button:hover {
+  background-color: #3a5663;
+} */
+
+.reminder-container {
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 20px;
+}
+
+.reminder-title {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.reminder-card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #100e0e; /* Fixed: Added 'solid' and proper color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.bell-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.close-btn {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.card-content p {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.4;
+}

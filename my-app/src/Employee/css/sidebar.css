@@ -1,0 +1,130 @@
+/* General Layout */
+.sidebar-container1{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar1 {
+    width: 260px;
+    background-color: #ffffff;
+    color: #1f2937;
+    border-right: 2px solid #d3d5d7; /* light gray line */
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05); 
+    /* box-shadow:  8px solid 0 8px #0000; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    height: 100vh;
+    position: fixed;
+}
+
+/* Logo */
+.logo1 {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #e5e7eb;
+}
+
+/* Welcome text */
+.welcome-text1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.welcome-text1 h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #374151;
+}
+
+.welcome-text1 span {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Sidebar Menu */
+.menu1 {
+    list-style: none;
+    padding: 0;
+    width: 80%;
+    margin-top: 20px;
+}
+
+.menu1 li {
+    margin-bottom: 12px;
+}
+
+.menu-link1 {
+    text-decoration: none;
+    color: #476775;
+    display: flex;
+    align-items: center;
+     border: 1px solid #476775;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+    font-size: 15px;
+    background-color: transparent;
+}
+
+.menu-link1:hover {
+    background-color: #476775;
+    color: white;
+}
+
+.menu-link1.active {
+    background-color: #476775;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    padding: 12px 16px;
+    border-radius: 12px;
+    
+}
+
+/* Icon style */
+.icon1{
+    font-size: 18px;
+}
+
+/* Logout Button */
+.logout1 {
+    margin-top: auto;
+    background: #f9fafb;
+    border: none;
+    color: #1f2937;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #476775;
+    gap: 10px;
+    padding: 12px 16px;
+    width: 80%;
+    border-radius: 12px;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.logout:hover {
+    background-color: #e5e7eb;
+}
+/* Profile Picture Styles */
+.sidebar-profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4A6D7C;
+  margin-bottom: 15px;
+}
+
+
