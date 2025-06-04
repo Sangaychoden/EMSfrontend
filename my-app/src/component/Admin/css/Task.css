@@ -221,6 +221,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+   overflow-y: auto;
+  z-index: 1000;
 }
 
 /* Modal Content */
@@ -228,10 +230,11 @@
   background: white;
   padding: 40px;
   width: 800px;
-  height: 600px;
+ max-height: 90vh;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
+  overflow-y: auto;
 }
 
 /* Modal Header */
@@ -255,6 +258,30 @@
 .modal-body input,
 .modal-body select,
 .modal-body textarea {
+  width: 100%;
+  padding: 8px;
+  height:40px ;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+label{
+  font-size: 14px;
+
+}
+
+.date-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Input Fields */
+.task-body input,
+.task-body select,
+.task-body textarea {
   width: 100%;
   padding: 8px;
   height:40px ;

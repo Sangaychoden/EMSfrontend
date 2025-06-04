@@ -493,6 +493,7 @@
 
 // export default TeamTask;
 
+
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaTasks, FaTicketAlt,  FaUserPlus,  FaEdit, FaTrash } from "react-icons/fa";
@@ -752,7 +753,7 @@ const validateForm = () => {
     <div className="modal-content">
 
       {/* Modal Header */}
-      <div className="modal-header">
+      <div className="modal-header" >
         <h3>Bulk Assign Tasks</h3>
         <button className="close-btn" onClick={closeModal}>×</button>
       </div>
@@ -760,6 +761,55 @@ const validateForm = () => {
       {/* Modal Body */}
       <div style={{ padding: '10px 0', fontFamily: 'sans-serif' }}>
         {/* Select Employee Button */}
+
+     <div className="task-body">
+              <label>Task Title</label>
+              <input
+                type="text"
+                name="task"
+                value={taskDetails.task}
+                onChange={handleInputChange}
+                style={{ borderColor: errors.task ? "red" : "" }}
+              />
+              {errors.task && <span style={{ color: "red", fontSize: "10px", display: "block", marginTop: "-4px",marginBottom:"4px" }}>{errors.task}</span>}
+
+   <label>Task Description</label>
+              <input
+                type="text"
+                name="taskdescription"
+                value={taskDetails.description}
+                onChange={handleInputChange}
+                style={{ borderColor: errors.task ? "red" : "" }}
+              />
+              {errors.task && <span style={{ color: "red", fontSize: "10px", display: "block", marginTop: "-4px",marginBottom:"4px" }}>{errors.task}</span>}
+
+         
+              <div className="date-container">
+                <div>
+                  <label>Assign Date</label>
+                  <input
+                    type="date"
+                    name="assignDate"
+                    value={taskDetails.assignDate}
+                    onChange={handleInputChange}
+                    style={{ borderColor: errors.assignDate ? "red" : "" }}
+                  />
+                  {errors.assignDate && <span style={{ color: "red", fontSize: "10px", display: "block", marginTop: "-4px",marginBottom:"4px" }}>{errors.assignDate}</span>}
+                </div>
+                <div>
+                  <label>Due Date</label>
+                  <input
+                    type="date"
+                    name="dueDate"
+                    value={taskDetails.dueDate}
+                    onChange={handleInputChange}
+                    style={{ borderColor: errors.dueDate ? "red" : "" }}
+                  />
+                  {errors.dueDate && <span style={{color: "red", fontSize: "10px", display: "block", marginTop: "-4px",marginBottom:"4px" }}>{errors.dueDate}</span>}
+                </div>
+              </div>
+              </div>
+
         <button
           onClick={() => setShowEmployeeList(!showEmployeeList)}
           style={{
@@ -797,7 +847,7 @@ const validateForm = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
-                {['Employee ID', 'Name', 'Task Description', 'Start Date', 'Due Date', 'Status', 'Actions'].map(header => (
+                {['Employee ID', 'Name', 'Responsibility', 'Status', 'Actions'].map(header => (
                   <th key={header} style={{ fontSize:"12px", border: '1px solid #ddd', padding: '8px', textAlign: 'left', backgroundColor: '#f4f4f4'}}>{header}</th>
                 ))}
               </tr>
@@ -810,28 +860,13 @@ const validateForm = () => {
                   <td style={{ border: '1px solid #ddd', padding: '8px' }}>
                     <input
                       type="text"
-                      placeholder="Enter task description"
-                      value={employee.taskDescription || ''}
+                      placeholder="Enter task"
+                      value={employee.responsibility || ''}
                       onChange={(e) => handleTaskDescriptionChange(employee.id, e.target.value)}
                       style={{ width: '100%', padding: '4px', border:"none" }}
                     />
                   </td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                    <input
-                      type="date"
-                      value={employee.startDate || ''}
-                      onChange={(e) => handleStartDateChange(employee.id, e.target.value)}
-                      style={{ width: '100%', padding: '4px', border:"none" }}
-                    />
-                  </td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                    <input
-                      type="date"
-                      value={employee.dueDate || ''}
-                      onChange={(e) => handleDueDateChange(employee.id, e.target.value)}
-                      style={{ width: '100%', padding: '4px', border:"none" }}
-                    />
-                  </td>
+           
                   <td style={{ border: '1px solid #ddd', padding: '8px', color:"#1E7CA4" }}>In Progress</td>
                   <td style={{ border: '1px solid #ddd', padding: '8px' }}>
                   <Pencil size={14} style={{ cursor: 'pointer', marginRight: '8px', color:"#274552" }} />

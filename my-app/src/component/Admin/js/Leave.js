@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { CheckCircleIcon } from '@heroicons/react/solid';
 import "../css/Leave.css"; // Import the CSS file
 import { FaCalendarAlt } from "react-icons/fa";
 import Sidebar from "./Sidebar";
@@ -10,11 +11,15 @@ const Leave = () => {
 
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const [remark, setRemark] = useState(""); // new state for optional remark
+
   const handleDetailClick = (request) => {
     setSelectedRequest(request);
+    setRemark(request.adminRemark || "");
     setShowModal(true);
   };
-  
+
   const handleStatusChange = (e) => {
     const updatedStatus = e.target.value;
     setSelectedRequest((prev) => ({
@@ -22,34 +27,118 @@ const Leave = () => {
       status: updatedStatus
     }));
   };
-  
+const [leaveRequests, setLeaveRequests] = useState([]);
+const [isUpdating, setIsUpdating] = useState(false);
+const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const [leaveRequests, setLeaveRequests] = useState([
-    { id: 1001, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-10", endDate: "2025-04-13", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-      { id: 1001, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-10", endDate: "2025-04-13", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-    { id: 1002, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-10", endDate: "2025-04-13", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-    { id: 1003, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-05", endDate: "2025-04-15", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-    { id: 1004, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-05", endDate: "2025-04-18", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-    { id: 1005, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-05", endDate: "2025-04-20", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-]);
-
-
-  // const leaveRequests = [
-  //   { id: 1001, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-10", endDate: "2025-04-13", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-  //   { id: 1002, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-10", endDate: "2025-04-13", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-  //   { id: 1003, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-05", endDate: "2025-04-15", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-  //   { id: 1004, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-05", endDate: "2025-04-18", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-  //   { id: 1005, name: "Sangay Choden", type: "Regular Leave", startDate: "2025-04-05", endDate: "2025-04-20", approver: "HR Karma Dorji", reason: "-", status: "Pending" },
-  // ];
 
   // Filter leave requests based on selected date
-  const filteredRequests = leaveRequests.filter(request => request.startDate === selectedDate);
+  // const filteredRequests = leaveRequests.filter(request => request.startDate === selectedDate);
+// const filteredRequests = leaveRequests;
+const filteredRequests = leaveRequests.filter((request) => {
+  const selected = new Date(selectedDate);
+  const start = new Date(request.startDate);
+  const end = new Date(request.endDate);
+
+  // Normalize all dates to remove time portion
+  selected.setHours(0, 0, 0, 0);
+  start.setHours(0, 0, 0, 0);
+  end.setHours(0, 0, 0, 0);
+
+  return selected >= start && selected <= end;
+});
+
+
 
   const openDatePicker = () => {
     if (dateInputRef.current) {
       dateInputRef.current.showPicker(); // This works in modern browsers
     }
   };
+
+ useEffect(() => {
+  const fetchLeaveRequests = async () => {
+    try {
+      const response = await fetch("http://localhost:8765/LEAVEMICROSERVICE/api/admin/all");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("Fetched Leave Requests:", data);
+      setLeaveRequests(data);
+    } catch (error) {
+      console.error("Error fetching leave requests:", error);
+    }
+  };
+
+  fetchLeaveRequests();
+}, []);
+console.log("Filtered:", selectedDate, filteredRequests);
+
+
+  const handleUpdateStatus = async () => {
+    if (!selectedRequest) return;
+
+    setIsUpdating(true);
+    try {
+      const response = await fetch(
+        `http://localhost:8765/LEAVEMICROSERVICE/api/admin/update/${selectedRequest.id}?status=${selectedRequest.status}`,
+        {
+          method: "PUT",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            status: selectedRequest.status,
+            remark: remark || null
+          })
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to update leave status');
+      }
+
+      // Update local state
+      setLeaveRequests(prev =>
+        prev.map(req =>
+          req.id === selectedRequest.id
+            ? { ...req, status: selectedRequest.status, adminRemark: remark }
+            : req
+        )
+      );
+
+      setShowModal(false);
+      setShowSuccessPopup(true);
+      setRemark("");
+
+      setTimeout(() => {
+    setShowSuccessPopup(false);
+   
+  }, 2000);
+
+    } catch (error) {
+      console.error("Update error:", error);
+      alert(`Update failed: ${error.message}`);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const getStatusColor = (status) => {
+  switch (status) {
+    case 'PENDING':
+      return '#883C45';
+    case 'APPROVED':
+      return '#008000';
+    case 'REJECTED':
+      return '#246392';
+    default:
+      return '#883C45';
+  }
+};
+
 
   return (
     <div className="dashboard-container">
@@ -101,19 +190,24 @@ const Leave = () => {
               </thead>
               <tbody>
                 {filteredRequests.length > 0 ? (
-                  filteredRequests.map((request, index) => (
-                    <tr key={index}>
+                  filteredRequests.map((request) => (
+                    <tr key={request._id}>
                       <td>{request.id}</td>
-                      <td>{request.name}</td>
-                      <td>{request.type}</td>
-                      <td>{request.startDate}</td>
-                      <td>{request.endDate}</td>
-                      <td>{request.approver}</td>
-                      <td>{request.reason}</td>
-                      <td className="pending-status" style={{  color:
-                      request.status === "Approved" ? "#008000" :
-                      request.status === "Rejected" ? "#883C45" :
-                                                  "#883C45", }}>  {request.status}</td>
+        <td>{request.employeeName}</td>
+        <td>{request.leaveType}</td>
+        <td>{request.startDate}</td>
+        <td>{request.endDate}</td>
+        <td>{request.approver}</td>
+        <td>{request.reason}</td>
+        <td
+          className="pending-status"
+  style={{
+    color: getStatusColor(request.status?.toUpperCase()),
+    fontWeight: '600'
+  }}
+        >
+          {request.status}
+        </td>
                       <td style={{ cursor: 'pointer'}} onClick={() => handleDetailClick(request)}>...</td>
                     </tr>
                   ))
@@ -182,13 +276,13 @@ const Leave = () => {
       }}>
         <div>
           <label style={{ fontSize: '12px', fontWeight: '600', color: '#111827' }}>Employee Name</label>
-          <input type="text" value={selectedRequest.name} disabled
+          <input type="text" value={selectedRequest.employeeName} disabled
             style={inputStyle} />
         </div>
 
         <div>
           <label style={{ fontSize: '12px', fontWeight: '600', color: '#111827' }}>Leave type</label>
-          <input type="text" value={selectedRequest.type} disabled
+          <input type="text" value={selectedRequest.leaveType} disabled
             style={inputStyle} />
         </div>
 
@@ -234,22 +328,40 @@ const Leave = () => {
             fontWeight: 'bold',
           }}
         >
-          <option value="Pending" style={{ color: 'red' }}>Pending</option>
-          <option value="Approved" style={{ color: 'green' }}>Approved</option>
-          <option value="Rejected" style={{ color: 'blue' }}>Rejected</option>
+          <option value="PENDING" style={{ color: '#883C45' }}>PENDING</option>
+          <option value="APPROVED" style={{ color: '#008000' }}>APPROVED</option>
+          <option value="REJECTED" style={{ color: '#246392' }}>REJECTED</option>
         </select>
       </div>
-
+{/* Remark (optional) */}
+<div style={{ marginBottom: '24px' }}>
+  <label style={{ fontSize: '12px', fontWeight: '600', color: '#111827' }}>Remark (optional)</label>
+     <textarea
+                value={remark}
+                onChange={(e) => setRemark(e.target.value)}
+                rows={3}
+                style={{ 
+                  ...inputStyle, 
+                  resize: 'none' 
+                }}
+                placeholder="Add remark if needed"
+              />
+</div>
       {/* Update button */}
       <div style={{ textAlign: 'center' }}>
-        <button onClick={() => {
-          setLeaveRequests(prev =>
-            prev.map(req =>
-              req.id === selectedRequest.id ? selectedRequest : req
-            )
-          );
-          setShowModal(false);
-        }} style={{
+        <button 
+        // onClick={() => {
+        //   setLeaveRequests(prev =>
+        //     prev.map(req =>
+        //       req.id === selectedRequest.id ? selectedRequest : req
+        //     )
+        //   );
+        //   setShowModal(false);
+        // }} 
+
+         onClick={handleUpdateStatus}
+         disabled={isUpdating}
+        style={{
           backgroundColor: '#C9DEDD',
           color: 'black',
           border: 'none',
@@ -261,7 +373,8 @@ const Leave = () => {
           fontStyle:'bold',
           transition: 'background-color 0.3s ease',
         }}>
-          Update
+          {/* Update */}
+          {isUpdating ? "Updating..." : "Update"}
         </button>
       </div>
     </div>
@@ -269,6 +382,22 @@ const Leave = () => {
 )}
 
 
+{/* Success Popup */}
+{showSuccessPopup && (
+     <div style={{
+      position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+      backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+    }}>
+  <div style={{
+    position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white', padding: '20px 40px', borderRadius: '6px',
+    textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)', width: '400px', height:"180px"
+  }}>
+    <CheckCircleIcon style={{ width: '80px', height: '80px', color: 'green' }} />
+    <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Leave status updated Successfully</p>
+  </div>
+  </div>
+)}
 
 
 
@@ -291,18 +420,6 @@ const inputStyleItalic = {
   fontSize: '12px'
 };
 
-const getStatusColor = (status) => {
-  switch (status) {
-    case 'Pending':
-      return '#883C45';
-    case 'Approved':
-      return '#008000';
-    case 'Rejected':
-      return '#246392';
-    default:
-      return '#883C45';
-  }
-};
 
 
 export default Leave;

@@ -601,9 +601,9 @@ The Dark Mode feature allows users to switch the website's theme to a darker col
   <div style={{
     position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
     backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
-    textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)', width: '350px', height:"150px"
+    textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)', width: '400px', height:"170px"
   }}>
-    <CheckCircleIcon style={{ width: '60px', height: '60px', color: 'green' }} />
+    <CheckCircleIcon style={{ width: '80px', height: '80px', color: 'green' }} />
     <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Deleted Successfully</p>
   </div>
   </div>
