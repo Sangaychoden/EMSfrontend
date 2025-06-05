@@ -39,6 +39,9 @@ const Task = () => {
   });
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+      const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+      const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+  
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -282,8 +285,9 @@ const handleEditInputChange = (e) => {
         ...newTask,
         assignedToName: selectedEmployee.name
       }]);
-      setShowSuccessMessage(true);
+      setShowConfirmPopup(true);
       setSelectedEmployee(null);
+        setIsModalOpen(false);
 
       setTaskDetails({
         taskName: "",
@@ -295,12 +299,11 @@ const handleEditInputChange = (e) => {
       });
 
       setTimeout(() => {
-        setIsModalOpen(false);
-        setShowSuccessMessage(false);
+        setShowConfirmPopup(false);
       }, 1500);
     } catch (error) {
       console.error("Error creating task:", error);
-      alert("Failed to create task. Please try again.");
+      // alert("Failed to create task. Please try again.");
     }
   };
 
@@ -345,21 +348,14 @@ const handleEditSubmit = async () => {
       }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    setShowUpdatePopup(true);
+
+    setTimeout(() => {
+      setShowUpdatePopup(false);
+    }, 1500);
 
     const updatedTask = await response.json();
     
-    // // Merge the updated fields with the existing task data
-    // setTasks(tasks.map(task => 
-    //   task.id === updatedTask.id ? {
-    //     ...task, // Keep existing fields
-    //     ...updatedTask, // Apply updated fields
-    //     assignedToName: Array.isArray(updatedTask.assignTo) ? 
-    //       updatedTask.assignTo.map(id => getEmployeeName(id)).join(', ') :
-    //       getEmployeeName(updatedTask.assignTo?.[0]),
-    //     assignDate: updatedTask.assignDate || task.assignDate // Fallback to existing if missing
-    //   } : task
-    // ));
-    // Merge the updated fields with the existing task data
 setTasks(tasks.map(task => 
   task.id === updatedTask.id ? {
     ...task, // Keep existing fields
@@ -374,7 +370,11 @@ setTasks(tasks.map(task =>
 
     setIsEditModalOpen(false);
     setErrors({});
-  } catch (error) {
+  } 
+  
+  
+  
+  catch (error) {
     console.error("Error updating task:", error);
     alert("Failed to update task. Please try again.");
   }
@@ -465,21 +465,21 @@ const confirmDelete = async () => {
         </div> 
         
         {/* Dashboard Content */}
-        <div className="content1" style={{marginTop:'-650px'}}>
-          <h2>Welcome, HR</h2>
-          <div className="cards">
-            <div className="card">
-              <FaUserPlus className="card-icon active" />
+        <div className="content1" style={{marginTop:'-950px', marginRight:'140px'}}>
+          <h1>Welcome, HR</h1>
+          <div style={{marginLeft:'100px'}} className="cardss">
+            <div style={{width:'490px'}}  className="card">
+              <FaUserPlus  style={{width:'45px', height:'45px'}}  className="card-icon active" />
               <p>Total Tasks Assigned</p>
               <h3>{tasks.length}</h3>
             </div>
-            <div className="card">
-              <FaTasks className="card-icon leave" />
+            <div style={{width:'490px'}}  className="card">
+              <FaTasks  style={{width:'45px', height:'45px'}}  className="card-icon leave" />
               <p>Tasks in Progress</p>
               <h3>{tasks.filter(task => task.status === 'IN_PROGRESS').length}</h3>
             </div>
-            <div className="card">
-              <FaTicketAlt className="card-icon joined" />
+            <div style={{width:'490px'}}  className="card">
+              <FaTicketAlt  style={{width:'45px', height:'45px'}}  className="card-icon joined" />
               <p>Completed Tasks</p>
               <h3>{tasks.filter(task => task.status === 'COMPLETED').length}</h3>
             </div>
@@ -492,18 +492,21 @@ const confirmDelete = async () => {
           </div>
 
           {/* Assign Task Button */}
-          <button className="assign-task-btn" onClick={() => setIsModalOpen(true)}>
+          <div style={{marginLeft:'500px'}}>
+          <button  className="assign-task-btn" onClick={() => setIsModalOpen(true)}>
             <FaEdit className="assign-icon" /> Assign Task
           </button>
-          
+          </div>
+
           {isModalOpen && (
             <div className="modal-overlay">
               <div className="modal-content">
                 <div className="modal-header">
                   <h3>Assign Task</h3>
-                  <button className="close-btn" onClick={() => {
+                  <button style={{fontSize:'24px', marginRight:'5px'}} className="close-btn" onClick={() => {
                     setIsModalOpen(false);
                     setSelectedEmployee(null);
+                    
                   }}>
                     ×
                   </button>
@@ -552,8 +555,8 @@ const confirmDelete = async () => {
                     )}
                     
                     {selectedEmployee && (
-                      <div className="selected-employees">
-                        <div className="selected-employee">
+                      <div  className="selected-employees">
+                        <div style={{fontSize:'15px', marginRight:'5px'}} className="selected-employee">
                           {selectedEmployee.name}
                           <button 
                             onClick={removeSelectedEmployee}
@@ -924,9 +927,9 @@ const confirmDelete = async () => {
           {isEditModalOpen && (
             <div className="modal-overlay">
               <div className="modal-content">
-                <div className="modal-header">
+                <div  className="modal-header">
                   <h3>Edit Task</h3>
-                  <button className="close-btn" onClick={() => setIsEditModalOpen(false)}>
+                  <button style={{fontSize:'24px', marginRight:'5px'}} className="close-btn" onClick={() => setIsEditModalOpen(false)}>
                     ×
                   </button>
                 </div>
@@ -1019,16 +1022,16 @@ const confirmDelete = async () => {
               position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
               backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
-              <div style={{
-                backgroundColor: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center', width: '450px', height:"200px"
+                <div style={{
+              backgroundColor: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center', width: '550px', height:"230px"
+            }}>
+              <button className="close-btn" onClick={() => setShowDeleteModal(false)} style={{
+                position: 'relative', marginLeft:"490px", marginBottom:"-200px", fontSize:'25px'
               }}>
-                <button className="close-btn" onClick={() => setShowDeleteModal(false)} style={{
-                  position: 'absolute', marginLeft:"180px"
-                }}>
-                  ×
-                </button>
-                <p style={{ marginTop: '50px', fontWeight: 'bold' }}>Are you sure you want to delete this task?</p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '140px' }}>
+                ×
+              </button>
+              <p style={{ marginTop: '10px', fontWeight: 'bold' , marginLeft:'-10px'}}>Are you sure you want to delete this Task?</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '180px' }}>
                   <button
                     onClick={confirmDelete}
                     style={{
@@ -1039,6 +1042,7 @@ const confirmDelete = async () => {
                       borderRadius: '5px',
                       cursor: 'pointer',
                       fontWeight: 'bold',
+                    width:'100px'
                     }}
                   >
                     Delete
@@ -1054,6 +1058,8 @@ const confirmDelete = async () => {
                       borderRadius: '5px',
                       cursor: 'pointer',
                       fontWeight: 'bold',
+                    width:'100px'
+
                     }}
                   >
                     Cancel
@@ -1063,22 +1069,59 @@ const confirmDelete = async () => {
             </div>
           )}
 
-          {/* Success Popup */}
-          {showSuccessPopup && (
-            <div style={{
-              position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
-            }}>
-              <div style={{
-                position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-                backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
-                textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)', width: '350px', height:"150px"
-              }}>
-                <CheckCircleIcon style={{ width: '60px', height: '60px', color: 'green' }} />
-                <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Deleted Successfully</p>
-              </div>
-            </div>
-          )}
+
+    {/* confirm Popup */}
+                      {showConfirmPopup && (
+                        <div style={{
+                          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                          backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                          <div style={{
+                            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                            backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
+                            textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)',width: '550px', height:"230px"
+                          }}>
+                            <CheckCircleIcon style={{ width: '130px', height: '130px', color: '#4A6D7C' }} />
+                            <p style={{ marginTop: '-10px',fontSize:'20px', fontWeight: 'bold',marginLeft:'-10px' }}>Task Assignd Successfully</p>
+                          </div>
+                        </div>
+                      )}
+
+                         {/* confirm Popup */}
+                      {showUpdatePopup && (
+                        <div style={{
+                          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                          backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                          <div style={{
+                            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                            backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
+                            textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)',width: '550px', height:"230px"
+                          }}>
+                            <CheckCircleIcon style={{ width: '130px', height: '130px', color: '#4A6D7C' }} />
+                            <p style={{ marginTop: '-10px',fontSize:'20px', fontWeight: 'bold',marginLeft:'-10px' }}>Task updated Successfully</p>
+                          </div>
+                        </div>
+                      )}
+
+
+
+           {/*delete Success Popup */}
+                 {showSuccessPopup && (
+                   <div style={{
+                     position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                     backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                   }}>
+                     <div style={{
+                       position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                       backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
+                       textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)',width: '550px', height:"230px"
+                     }}>
+                       <CheckCircleIcon style={{ width: '130px', height: '130px', color: '#4A6D7C' }} />
+                       <p style={{ marginTop: '-10px',fontSize:'20px', fontWeight: 'bold',marginLeft:'-10px' }}>Deleted Successfully</p>
+                     </div>
+                   </div>
+                 )}
 
           {/* Task Detail Modal */}
           {isDetailModalOpen && selectedTask && (
@@ -1138,7 +1181,9 @@ const confirmDelete = async () => {
                       border: '1px solid #ccc',
                       borderRadius: '6px',
                       marginTop: '5px',
-                      fontSize:"12px"
+                      fontSize:"12px",
+                      fontStyle:'italic',
+                      color:'#696969'
                     }}
                   />
                 </div>
@@ -1157,7 +1202,9 @@ const confirmDelete = async () => {
                       border: '1px solid #ccc',
                       borderRadius: '6px',
                       marginTop: '5px',
-                      fontSize:"12px"
+                      fontSize:"12px",
+                      fontStyle:'italic',
+                      color:'#696969'
                     }}
                   />
                 </div>
@@ -1176,7 +1223,9 @@ const confirmDelete = async () => {
                         border: '1px solid #ccc',
                         borderRadius: '6px',
                         marginTop: '5px',
-                        fontSize:"12px"
+                        fontSize:"12px",
+                      fontStyle:'italic',
+                      color:'#696969'
                       }}
                     />
                   </div>
@@ -1192,7 +1241,9 @@ const confirmDelete = async () => {
                         border: '1px solid #ccc',
                         borderRadius: '6px',
                         marginTop: '5px',
-                        fontSize:"12px"
+                        fontSize:"12px",
+                      fontStyle:'italic',
+                      color:'#696969'
                       }}
                     />
                   </div>
@@ -1208,7 +1259,9 @@ const confirmDelete = async () => {
                     backgroundColor: '#f9f9f9',
                     marginTop: '5px',
                     whiteSpace: 'pre-wrap',
-                    fontSize:"12px"
+                    fontSize:"12px",
+                      fontStyle:'italic',
+                      color:'#696969'
                   }}>
                     {selectedTask.description}
                   </div>
@@ -1228,7 +1281,9 @@ const confirmDelete = async () => {
                         border: '1px solid #ccc',
                         borderRadius: '6px',
                         marginTop: '5px',
-                        fontSize:"12px"
+                        fontSize:"12px",
+                      fontStyle:'italic',
+                      color:'#696969'
                       }}
                     />
                   </div>

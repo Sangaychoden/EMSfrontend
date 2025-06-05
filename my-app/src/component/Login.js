@@ -375,67 +375,139 @@ const Login = () => {
     }
   }, [error]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   setLoading(true);
 
-    try {
-      const response = await fetch("http://localhost:8765/EMSUSERMICROSERVICE/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, password }),
-      });
+  //   try {
+  //     const response = await fetch("http://localhost:8765/EMSUSERMICROSERVICE/api/login", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ userId, password }),
+  //     });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        const errMsg = errorData.message || 
-                      (response.status === 401 ? "Invalid credentials" : 
-                      "Login failed");
-        throw new Error(errMsg);
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json().catch(() => ({}));
+  //       const errMsg = errorData.message || 
+  //                     (response.status === 401 ? "Invalid credentials" : 
+  //                     "Login failed");
+  //       throw new Error(errMsg);
+  //     }
 
-      const result = await response.json();
-        // Clean the token before storing
-      const rawToken = result.token;
-      const cleanToken = rawToken.replace(/^Bearer\s+/i, '');
+  //     const result = await response.json();
+  //       // Clean the token before storing
+  //     const rawToken = result.token;
+  //     const cleanToken = rawToken.replace(/^Bearer\s+/i, '');
 
-      // Store user details and token
-      console.log("Logged in user ID:", userId);
-      console.log("User details from server:", result);
-      // console.log("Authentication token:", result.token); // Log the token
+  //     // Store user details and token
+  //     console.log("Logged in user ID:", userId);
+  //     console.log("User details from server:", result);
+  //     // console.log("Authentication token:", result.token); // Log the token
       
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('userDetails', JSON.stringify(result));
-      // localStorage.setItem('token', result.token); // Store the token
-      localStorage.setItem('userRole', result.role); // Store user role if available
-      localStorage.setItem('token', cleanToken); 
-      // console.log("Stored token in localStorage:", localStorage.getItem('token')); // Verify storage
+  //     localStorage.setItem('userId', userId);
+  //     // / Save the email from userDetails
+  //     const userEmail = result.userDetails?.email || '';
+  //     const userName = result.userDetails?.name|| '';
+  //     localStorage.setItem('userDetails', JSON.stringify(result.userDetails));
+  //     localStorage.setItem('userDetails', JSON.stringify(result));
+  //       console.log("Stored user email:", userEmail)
+  //       console.log("Stored user email:", userName)
+  //     // localStorage.setItem('token', result.token); // Store the token
+  //     localStorage.setItem('userRole', result.role); // Store user role if available
+  //     localStorage.setItem('token', cleanToken); 
+  //     // console.log("Stored token in localStorage:", localStorage.getItem('token')); // Verify storage
 
-      console.log("Stored CLEAN token:", cleanToken);
-      // Redirect based on user type
-      if (userId.startsWith("EMP")) {
-        navigate("/employee/dashboard");
-        console.log("Employee logged in:", result.name);
-      } else if (userId.startsWith("USER")) {
-        navigate("/admin/dashboard");
-        console.log("Admin logged in:", result.name);
-      } else {
-        navigate("/dashboard");
-        console.log("Generic user logged in:", result.name);
-      }
+  //     console.log("Stored CLEAN token:", cleanToken);
+  //     // Redirect based on user type
+  //     if (userId.startsWith("EMP")) {
+  //       navigate("/employee/dashboard");
+  //       console.log("Employee logged in:", result.name);
+  //     } else if (userId.startsWith("USER")) {
+  //       navigate("/admin/dashboard");
+  //       console.log("Admin logged in:", result.name);
+  //     } else {
+  //       navigate("/dashboard");
+  //       console.log("Generic user logged in:", result.name);
+  //     }
 
-    } catch (error) {
-      console.error("Login error:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
+
+  try {
+    const response = await fetch("http://localhost:8765/EMSUSERMICROSERVICE/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, password }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errMsg = errorData.message || 
+                    (response.status === 401 ? "Invalid credentials" : 
+                    "Login failed");
+      throw new Error(errMsg);
     }
-  };
+
+    const result = await response.json();
+    
+    // Clean the token before storing
+    const cleanToken = result.token.replace(/^Bearer\s+/i, '');
+    
+    // Extract user details
+    const userEmail = result.userDetails?.email || '';
+    const userName = result.userDetails?.name || '';
+    const userRole = result.role || '';
+    const approver = result.userDetails?.approver || '';
+
+    // Store authentication and user data
+    localStorage.setItem('token', cleanToken);
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('userEmail', userEmail);
+    localStorage.setItem('userName', userName);
+    localStorage.setItem('userRole', userRole);
+    localStorage.setItem('approver', approver);
+    
+    // Store complete user details as a single object if needed
+    localStorage.setItem('userDetails', JSON.stringify(result.userDetails));
+
+    // Log stored values for verification
+    console.log("Login successful. Stored values:");
+    console.log("User ID:", userId);
+    console.log("User Email:", userEmail);
+    console.log("User Name:", userName);
+    console.log("User Role:", userRole);
+    console.log("Approver:", approver);
+    console.log("Clean Token:", cleanToken);
+
+    // Redirect based on user type
+    const redirectPath = userId.startsWith("EMP") ? "/employee/dashboard" :
+                        userId.startsWith("USER") ? "/admin/dashboard" :
+                        "/dashboard";
+    
+    navigate(redirectPath);
+    console.log(`Redirecting ${userName} (${userId}) to ${redirectPath}`);
+
+  } catch (error) {
+    console.error("Login error:", error);
+    setError(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="login-container">
-      <div className="logo1">
+      <div className="logo2">
         <img src={logo} alt="Company Logo" />
       </div>
       <div className="login-box">

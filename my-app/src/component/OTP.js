@@ -86,7 +86,7 @@ const OTP = () => {
 
   return (
     <div className="forgot-password-container">
-      <div className="logo1">
+      <div className="logo2">
         <img src={logo} alt="Your Logo" />
       </div>
       <div className="forgot-password-box">

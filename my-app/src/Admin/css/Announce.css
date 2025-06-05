@@ -37,6 +37,7 @@
     font-size: 16px;
     border-radius: 5px;
     height: 56px;
+    width: 300px;
     font-weight: bold;
 
   }
@@ -53,7 +54,12 @@
     gap: 20px;
 
   }
-  
+  h2{
+  font-size: 20px;
+  font-weight: bold;
+  color: #4A4A4A;
+  margin-bottom: 10px;
+}
 
 /* Announcements & Events Section */
 .announcements-section, .events-section {
@@ -69,9 +75,16 @@
     border-radius: 10px;
     margin-bottom: 10px;
   }
+  .event-card4{
+    background: #f9f9f9;
+    padding: 15px;
+    /* border-radius: 10px; */
+    margin-bottom: 10px;
+    border: 1px solid rgb(71, 69, 69);
+  }
   
   .announcement-card h5, .event-card h5 {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: bold;
   }
   

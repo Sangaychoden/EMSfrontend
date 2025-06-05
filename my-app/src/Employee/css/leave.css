@@ -36,13 +36,13 @@
   background: white;
   border-radius: 8px;
   padding: 20px;
-  width:1000px;
-  height: 500px;
+  width:1500px;
+  height: 520px;
   border: 1px solid #2d2c2c;
   /* position: center; */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 30px;
-  margin-left: 100px;
+  margin-left: 150px;
   margin-top: 20px;
 }
 
@@ -85,16 +85,16 @@
   color: black;
   border: none;
   padding: 10px 20px;
-  border-radius: 15px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  margin: 10px auto 0; /* top 10px, auto left & right */
+  margin: 30px auto 0; /* top 10px, auto left & right */
   width: 100px;
   display: block; /* allows margin auto to center */
 }
 
 .submit-btn:hover {
-  background-color: #ccdfcd;
+  background-color: #C9DEDD;
 }
 
 .leave-history {

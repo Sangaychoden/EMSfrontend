@@ -188,7 +188,7 @@ const ResetPassword = () => {
       if (response.ok) {
         setSuccess(true);
         setTimeout(() => {
-          alert(" password reset successful")
+          // alert(" password reset successful")
           navigate("/");
           localStorage.removeItem("recoveryEmail");
         }, 3000);
@@ -212,7 +212,7 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-password-container">
-      <div className="logo1">
+      <div className="logo2">
         <img src={logo} alt="Your Logo" />
       </div>
       <div className="reset-password-box">
@@ -262,7 +262,7 @@ const ResetPassword = () => {
 
           {success && (
             <div className="success-message">
-              <p>Password reset successfully! Redirecting to login...</p>
+              <p style={{marginLeft:'1px'}}>Password reset successfully! Redirecting to login...</p>
             </div>
           )}
 

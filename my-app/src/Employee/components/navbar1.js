@@ -57,7 +57,7 @@ const Navbar = () => {
           <div style={{
             fontSize: "14px", 
             fontWeight: "bold",
-            marginRight: "1090px", 
+            marginRight: "1550px", 
             marginTop: "10px", 
             color: "#4A6D7C", 
             borderBottom: "1px solid #4A6D7C"

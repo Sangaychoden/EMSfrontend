@@ -43,6 +43,7 @@
 
 .task-section {
   margin-bottom: 30px;
+  font-size: 14px;
   /* margin-left:-40px, */
 }
 
@@ -65,13 +66,13 @@
    background-color: #476775;
   padding: 12x;
   text-align: left;
-  border-bottom: 2px solid #dcdde1;
+  border-bottom: 2px solid #dbdbdb;
   color: white;
 }
 
 .task-table td {
   padding: 12px;
-  border-bottom: 1px solid #f5f6fa;
+  border-bottom: 1px solid #dbdbdb;
 }
 
 /* .serial-number {
@@ -133,7 +134,7 @@
 }
 
 .view-button:hover {
-  background-color: #487eb0;
+  background-color: #b3cfce;
 }
 
 /* .view-button {

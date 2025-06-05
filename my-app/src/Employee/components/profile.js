@@ -169,7 +169,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "./sidebar1";
 import Navbar from "./navbar1";
 import "../css/profile.css";
-import defaultPic from "../profile.png";
+import defaultPic from "../profile.jpg";
 import { FaCamera, FaArrowLeft, FaEdit, FaSave, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -345,8 +345,9 @@ const Profile = () => {
                 src={previewUrl || defaultPic}
                 alt="Profile"
                 className="profile-pic1"
+                style={{height:'250px', width:'250px'}}
               />
-              <div className="camera-icon">
+              <div className="camera-icon1">
                 <input
                   type="file"
                   id="file-input"

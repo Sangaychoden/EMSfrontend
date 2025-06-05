@@ -97,7 +97,8 @@ label {
 .edit-form input {
   padding: 10px;
   border-radius: 6px;
-  width: 550px;
+  width: 1000px;
+  height: 50px;
   border: 1px solid #ccc;
 }
 
@@ -115,6 +116,7 @@ label {
   padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
+  height: 50px;
   font-weight: bold;
 }
 .password-popup-overlay {

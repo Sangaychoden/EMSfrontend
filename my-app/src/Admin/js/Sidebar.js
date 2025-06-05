@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-container">
-      <div className="sidebar">
+      <div className="asidebar">
         <div className="logo">
           <img src={logo} alt="Logo" />
         </div>
@@ -42,9 +42,18 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
-        <button className="logout">
+        {/* <button className="logout">
           <FaSignOutAlt className="icon" /> Logout
-        </button>
+        </button> */}
+        <button 
+  className="logout"
+  onClick={() => {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  }}
+>
+  <FaSignOutAlt className="icon" /> Logout
+</button>
       </div>
     </div>
   );

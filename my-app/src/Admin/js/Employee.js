@@ -3,7 +3,8 @@ import "../css/Employee.css"; // Import the CSS file
 import { FaUserEdit, FaTrash, FaUserPlus, FaEdit } from "react-icons/fa";
 import { MdDashboard, MdDateRange } from "react-icons/md";
 import { IoMdPerson } from "react-icons/io";
-import { CheckCircleIcon } from '@heroicons/react/solid';
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
+
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 // import { toast } from 'react-toastify';
@@ -125,10 +126,10 @@ const handleSubmit = async (e) => {
       }
 
       // Show success notification
-      toast.success('Employee added successfully!', {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      // toast.success('Employee added successfully!', {
+      //   position: "top-center",
+      //   autoClose: 3000,
+      // });
 
       // Refresh the employee list
       const updatedResponse = await fetch('http://localhost:8765/EMSUSERMICROSERVICE/api/employee/all', {
@@ -141,12 +142,19 @@ const handleSubmit = async (e) => {
       setEmployees(updatedData);
 
       closeModal();
+
+         setShowConfirmPopup(true);
+
+    setTimeout(() => {
+      setShowConfirmPopup(false);
+    }, 1500);
+
     } catch (error) {
       console.error('Error adding employee:', error);
-      toast.error(`Error: ${error.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-      });
+      // toast.error(`Error: ${error.message}`, {
+      //   position: "top-center",
+      //   autoClose: 5000,
+      // });
     }
   }
 };
@@ -191,7 +199,7 @@ const handleSubmit = async (e) => {
 
 const handleAdd = async () => {
   try {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     if (!token) throw new Error("No token found");
 
     const employeesData = rows.map(row => ({
@@ -220,20 +228,20 @@ const handleAdd = async () => {
     }
 
     // Handle partial success
-    if (result.errors?.length > 0) {
-      toast.warning(
-        `Successfully added ${result.successCount} employees. ${result.errors.length} errors occurred.`,
-        {
-          position: "top-center",
-          autoClose: 5000,
-        }
-      );
-    } else {
-      toast.success(`Successfully added ${result.successCount} employees!`, {
-        position: "top-center",
-        autoClose: 3000,
-      });
-    }
+    // if (result.errors?.length > 0) {
+    //   toast.warning(
+    //     `Successfully added ${result.successCount} employees. ${result.errors.length} errors occurred.`,
+    //     {
+    //       position: "top-center",
+    //       autoClose: 5000,
+    //     }
+    //   );
+    // } else {
+    //   toast.success(`Successfully added ${result.successCount} employees!`, {
+    //     position: "top-center",
+    //     autoClose: 3000,
+    //   });
+    // }
 
     // Refresh employee list
     const updatedResponse = await fetch('http://localhost:8765/EMSUSERMICROSERVICE/api/employee/all', {
@@ -243,6 +251,12 @@ const handleAdd = async () => {
     setEmployees(updatedData);
 
     setIsModalopen(false);
+     setShowConfirmPopup(true);
+
+    setTimeout(() => {
+      setShowConfirmPopup(false);
+    }, 1500);
+
   } catch (error) {
     console.error('Bulk add error:', error);
     toast.error(`Error: ${error.message}`, {
@@ -282,7 +296,7 @@ const handleEditClick = (employee) => {
 const handleEditSubmit = async (e) => {
   e.preventDefault();
   try {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     if (!token) {
       throw new Error("No token found. Please log in.");
     }
@@ -301,10 +315,10 @@ const handleEditSubmit = async (e) => {
       throw new Error(errorData.message || 'Failed to update employee');
     }
 
-    toast.success('Employee updated successfully!', {
-      position: "top-center",
-      autoClose: 3000,
-    });
+    // toast.success('Employee updated successfully!', {
+    //   position: "top-center",
+    //   autoClose: 3000,
+    // });
 
     // Refresh employee list
     const updatedResponse = await fetch('http://localhost:8765/EMSUSERMICROSERVICE/api/employee/all', {
@@ -314,18 +328,28 @@ const handleEditSubmit = async (e) => {
     setEmployees(updatedData);
 
     setIsEditModalOpen(false);
-  } catch (error) {
+    setShowUpdatePopup(true);
+
+    setTimeout(() => {
+      setShowUpdatePopup(false);
+    }, 1500);
+  } 
+  
+  
+  catch (error) {
     console.error('Error updating employee:', error);
-    toast.error(`Error: ${error.message}`, {
-      position: "top-center",
-      autoClose: 5000,
-    });
+    // toast.error(`Error: ${error.message}`, {
+    //   position: "top-center",
+    //   autoClose: 5000,
+    // });
   }
 };
 
 // delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+      const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+        const [showUpdatePopup, setShowUpdatePopup] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [tasks, setTasks] = useState([]);
 
@@ -338,7 +362,7 @@ const handleDeleteClick = (employeeId) => {
     setShowDeleteModal(false);
     
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('token');
       if (!token) throw new Error("No authentication token found");
 
       const response = await fetch(`http://localhost:8765/EMSUSERMICROSERVICE/api/employee/${taskToDelete}`, {
@@ -356,16 +380,25 @@ const handleDeleteClick = (employeeId) => {
       // Update UI state
       setEmployees(employees.filter(emp => emp.id !== taskToDelete));
       
-      toast.success('Employee deleted successfully!', {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      // toast.success('Employee deleted successfully!', {
+      //   position: "top-center",
+      //   autoClose: 3000,
+      // });
+
+
+    setShowDeleteModal(false);
+    setShowSuccessPopup(true);
+
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 1500);
+
     } catch (error) {
       console.error('Delete error:', error);
-      toast.error(`Error: ${error.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-      });
+      // toast.error(`Error: ${error.message}`, {
+      //   position: "top-center",
+      //   autoClose: 5000,
+      // });
     }
   };
 
@@ -396,14 +429,15 @@ const handleDeleteClick = (employeeId) => {
         </div>
 
         {/* Dashboard Content */}
-        <div className="content" style={{ marginTop: '-650px', marginLeft:'-150px' }}>
-          <h4>Employees</h4>
+        <div className="content5" style={{marginTop:'-950px', marginRight:'90px'}}>
+          <h2>Employees</h2>
 
           {/* Add New Employee Button */}
-          <button className="add-employee-btn" onClick={openModal}>
+          <div style={{marginLeft:'1570px'}}>
+          <button  className="add-employee-btnn" onClick={openModal}>
             <FaUserPlus /> Add New Employee
           </button>
-
+</div>
 
 
 {/* Add Employee Modal */}
@@ -527,7 +561,7 @@ const handleDeleteClick = (employeeId) => {
                         <option value="">Select Title</option>
                         <option value="IT Officer">IT Officer</option>
                         <option value="Manager">Manager</option>
-                        <option value="HR">HR</option>
+                        <option value="HR">Developer</option>
                       </select>
                       {errors.employeeTitle && <span style={{ color: 'red', fontSize: '12px' }}>{errors.employeeTitle}</span>}
                     </div>
@@ -600,7 +634,6 @@ const handleDeleteClick = (employeeId) => {
                   <th>Phone Number</th>
                   <th>Employee Title</th>
                   <th>Employee Type</th>
-                  {/* <th>Details</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -615,14 +648,13 @@ const handleDeleteClick = (employeeId) => {
                     <td>{employee.employeeType}</td>
                     {/* <td>...</td> */}
                     {/* <td>
-                      <button className="edit-btn"><FaUserEdit  onClick={handleEditClick}/></button>
-                      <button className="delete-btn"><FaTrash onClick={() => handleDeleteClick(tasks.id)} /></button>
+                      <button className="edit-btn"><FaUserEdit  onClick={() => handleEditClick(employee)}/></button>
+                      <button className="delete-btn"><FaTrash onClick={() => handleDeleteClick(employee.id)} /></button>
                     </td> */}
-                    <td>
+                    <td className="buttonn" >
                         <button className="edit-btn" onClick={() => handleEditClick(employee)}>
     <FaUserEdit />
   </button>
-    {/* <button className="edit-btn"><FaUserEdit onClick={handleEditClick}/></button> */}
     <button className="delete-btn" onClick={() => handleDeleteClick(employee.id)}>
       <FaTrash />
     </button>
@@ -932,16 +964,16 @@ const handleDeleteClick = (employeeId) => {
           backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
         }}>
        
-          <div style={{
-            backgroundColor: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center', width: '450px', height:"200px"
-          }}>
-               <button className="close-btn" onClick={() => setShowDeleteModal(false)} style={{
-            position: 'absolute', marginLeft:"180px"
-          }}>
-          ×
-        </button>
-            <p style={{ marginTop: '50px', fontWeight: 'bold' }}>Are you sure you want to remove this employee?</p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '140px' }}>
+           <div style={{
+              backgroundColor: 'white', padding: '20px', borderRadius: '8px', textAlign: 'center', width: '550px', height:"230px"
+            }}>
+              <button className="close-btn" onClick={() => setShowDeleteModal(false)} style={{
+                position: 'relative', marginLeft:"490px", marginBottom:"-200px", fontSize:'25px'
+              }}>
+                ×
+              </button>
+              <p style={{ marginTop: '10px', fontWeight: 'bold' , marginLeft:'-10px'}}>Are you sure you want to remove this Employee?</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '180px' }}>
               <button
                 onClick={confirmDelete}
                 style={{
@@ -977,8 +1009,61 @@ const handleDeleteClick = (employeeId) => {
         </div>
       )}
 
+          {/* confirm Popup */}
+                      {showConfirmPopup && (
+                        <div style={{
+                          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                          backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                          <div style={{
+                            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                            backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
+                            textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)',width: '550px', height:"230px"
+                          }}>
+                            <CheckCircleIcon style={{ width: '130px', height: '130px', color: '#4A6D7C' }} />
+                            <p style={{ marginTop: '-10px',fontSize:'20px', fontWeight: 'bold',marginLeft:'-10px' }}>Employee Added Successfully</p>
+                          </div>
+                        </div>
+                      )}
+
+                         {/* confirm Popup */}
+                      {showUpdatePopup && (
+                        <div style={{
+                          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                          backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}>
+                          <div style={{
+                            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                            backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
+                            textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)',width: '550px', height:"230px"
+                          }}>
+                            <CheckCircleIcon style={{ width: '130px', height: '130px', color: '#4A6D7C' }} />
+                            <p style={{ marginTop: '-10px',fontSize:'20px', fontWeight: 'bold',marginLeft:'-10px' }}>Employee updated Successfully</p>
+                          </div>
+                        </div>
+                      )}
+
+
+
+           {/*delete Success Popup */}
+                 {showSuccessPopup && (
+                   <div style={{
+                     position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                     backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                   }}>
+                     <div style={{
+                       position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                       backgroundColor: 'white', padding: '20px 40px', borderRadius: '8px',
+                       textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)',width: '550px', height:"230px"
+                     }}>
+                       <CheckCircleIcon style={{ width: '130px', height: '130px', color: '#4A6D7C' }} />
+                       <p style={{ marginTop: '-10px',fontSize:'20px', fontWeight: 'bold',marginLeft:'-10px' }}>Employee removed successfully</p>
+                     </div>
+                   </div>
+                 )}
+
 {/* Success Popup */}
-{showSuccessPopup && (
+{/* {showSuccessPopup && (
      <div style={{
       position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
       backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -992,7 +1077,7 @@ const handleDeleteClick = (employeeId) => {
     <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Employee removed successfully</p>
   </div>
   </div>
-)}
+)} */}
 
 
         </div>

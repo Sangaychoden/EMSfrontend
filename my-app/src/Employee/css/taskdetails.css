@@ -47,19 +47,19 @@
 
 .task-card {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 5px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 30px;
   /* max-width: 1500px; */
   margin-top: 10px;
-  width: 100%;
+  width: 1500px;
   /* align-items: center; */
-  margin-left: 200px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 10px;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 
 .task-title {
-  background-color: #1A3C4A;
+  background-color: #4A6D7C;
   color: #ffffff;
   font-size: 20px;
   font-weight: 600;
@@ -92,7 +92,7 @@
 }
 
 .section-title {
-  font-weight: 600;
+  font-weight: 14px;
   margin-top: 15px;
   margin-bottom: 2px;
 }

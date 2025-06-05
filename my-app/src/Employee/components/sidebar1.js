@@ -64,7 +64,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
-import defaultPic from "../profile.png"; // Default image if no photo exists
+import defaultPic from "../profile.jpg"; // Default image if no photo exists
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -133,9 +133,15 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
-        <button className="logout1">
-          <FaSignOutAlt className="icon" /> Logout
-        </button>
+        <button 
+         className="logout1"
+         onClick={() => {
+           localStorage.removeItem('token');
+           window.location.href = '/';
+         }}
+       >
+         <FaSignOutAlt className="icon" /> Logout
+       </button>
       </div>
     </div>
   );
